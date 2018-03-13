@@ -3,33 +3,28 @@ package com.sws.hrmapp.service.impl;
 
 import com.sws.hrmapp.dao.UserMapper;
 import com.sws.hrmapp.entity.User;
-import com.sws.hrmapp.service.HrmService;
-import com.sws.hrmapp.util.tag.PageModel;
+import com.sws.hrmapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-@Service("hrmService")
+@Service("userService")
 @Transactional(propagation= Propagation.REQUIRED,isolation = Isolation.DEFAULT)
-public class HrmServiceImpl implements HrmService {
+public class UserServiceImpl implements UserService {
 
     @Autowired
-    private UserMapper userDao;
+    private UserMapper userMapper;
 
     @Transactional(readOnly = true)
     public User login(String loginname, String password){
-        return userDao.selectByLOginnameAndPassword(loginname,password);
+        return userMapper.selectByLOginnameAndPassword(loginname,password);
     }
 
     @Transactional(readOnly = true)
     public User findUserById(Integer id) {
-        return userDao.selectByPrimaryKey(id);
+        return userMapper.selectByPrimaryKey(id);
     }
 
 //    @Transactional(readOnly = true)
@@ -46,14 +41,14 @@ public class HrmServiceImpl implements HrmService {
 //    }
 
     public void removeUserById(Integer id) {
-        userDao.deleteByPrimaryKey(id);
+        userMapper.deleteByPrimaryKey(id);
     }
 
     public void modifyUser(User user) {
-        userDao.updateByPrimaryKeySelective(user);
+        userMapper.updateByPrimaryKeySelective(user);
     }
 
     public void addUser(User user) {
-        userDao.insertSelective(user);
+        userMapper.insertSelective(user);
     }
 }
