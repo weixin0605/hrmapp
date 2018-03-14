@@ -14,7 +14,7 @@ import javax.servlet.http.HttpSession;
 
 
 @Controller
-public class UerController {
+public class UserController {
     @Autowired
     @Qualifier("userService")
     private UserService userService;

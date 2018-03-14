@@ -1,7 +1,9 @@
 package com.sws.hrmapp.dao;
 
 import com.sws.hrmapp.entity.User;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface UserMapper {
     int deleteByPrimaryKey(Integer id);
 
