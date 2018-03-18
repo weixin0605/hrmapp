@@ -10,7 +10,7 @@
         #login{
             text-align: center;
             background-color:#0b93d9;
-            border-radius: 15px;
+            border-radius: 10px;
             margin: auto;
             position: absolute;
             top: 0;
@@ -22,9 +22,12 @@
 
 </head>
 <body>
-<div id="login" style="width:230px;height:100px;">
+<div id="login" style="width:300px;height:110px;">
     <div id="loginForm">
         <table>
+            <tr>
+                <td rowspan="4"><img src="../img/welcome.jpg" style="width:90px;height:100px;"/></td>
+            </tr>
             <tr>
                 <td><label>帐号：</label></td>
                 <td>
@@ -41,7 +44,8 @@
                 <td></td>
                 <td>
                     <input value="Login" type="button" onclick="submitForm()" />
-                    &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;
+                <!--</td>-->
+                <!--<td>-->
                     <input value="Reset" type="button" onclick="resetForm()" />
                 </td>
             </tr>
@@ -61,7 +65,17 @@
             url: "/login",
             type: "post",
             data: JSON.stringify(data),
-            contentType:"application/json"
+            contentType:"application/json",
+            success: function(e){
+                console.log(e);
+                if(e.code=="1") {
+                    window.location = "/public/main.html";
+                }else{
+                    mini.alert(e.message);
+                }
+            },
+            error: function(){mini.alert("请重新试一下");}
+
         });
         console.log(data);
         loginForm.clear();

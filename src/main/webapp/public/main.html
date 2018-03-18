@@ -3,8 +3,102 @@
 <head>
     <meta charset="UTF-8">
     <title>main</title>
+    <script src="../scripts/boot.js" type="text/javascript"></script>
+    <script src="../scripts/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <link href="../scripts/miniui/themes/blue/skin.css" rel="stylesheet" type="text/css" />
+
+    <style type="text/css">
+        body{
+            margin:0;padding:0;border:0;width:100%;height:100%;overflow:hidden;
+        }
+        .header
+        {
+            background:url(../img/head.jpg) repeat-x 0 -1px;
+        }
+    </style>
 </head>
 <body>
 
+    <div id="layout" class="mini-layout" style="width:100%;height:100%;">
+        <div class="header" region="north" height="70" showSplit="false" showHeader="false">
+            <h1 style="margin:0;padding:15px;cursor:default;font-family:'Trebuchet MS',Arial,sans-serif;">人事管理系统</h1>
+        </div>
+        <div title="south" region="south" showSplit="false" showHeader="false" height="30" >
+            <div style="line-height:28px;text-align:center;cursor:default">Copyright © 星星wei</div>
+        </div>
+        <div showHeader="false" region="west" width="180" maxWidth="250" minWidth="100" >
+            <!--OutlookMenu-->
+            <div id="leftTree" class="mini-outlookmenu"  onitemselect="onItemSelect"
+                 idField="id" parentField="pid" textField="text" borderStyle="border:0">
+            </div>
+
+        </div>
+        <div title="center" region="center" bodyStyle="overflow:hidden;">
+            <div id="mainTabs" class="mini-tabs" activeIndex="2" style="width:100%;height:100%;"
+                 plain="false" onactivechanged="onTabsActiveChanged" oncloseclick="onCloseClick">
+            </div>
+
+        </div>
+
+
+    </div>
+
 </body>
+<script type="text/javascript">
+    mini.parse();
+
+    var leftTree = mini.get("#leftTree");
+    var list = [
+            { id: "user", text: "用户管理"},
+            { id: "addUser", pid: "user", text: "用户列表", iconCls: "icon-search", url: "../datagrid/celledit.html" }
+        ];
+    console.log(mini.encode(list));
+    leftTree.loadList(list,'id','pid');
+
+    var mainTabls = mini.get("#mainTabs");
+    function onItemSelect(e) {
+        var node = e.item;
+        showTab(node);
+    }
+
+
+    function showTab(node) {
+        var tabs = mini.get("mainTabs");
+
+        var id = "tab$" + node.id;
+        var tab = tabs.getTab(id);
+        if (!tab) {
+            tab = {};
+            tab._nodeid = node.id;
+            tab.name = id;
+            tab.title = node.text;
+            tab.showCloseButton = true;
+
+            tab.url = "/public/userList.html";
+
+            tabs.addTab(tab);
+        }
+        tabs.activeTab(tab);
+    }
+
+    function onTabsActiveChanged(e) {
+        var tabs = e.sender;
+        var tab = tabs.getActiveTab();
+        if (tab && tab._nodeid) {
+
+            var node = tree.getNode(tab._nodeid);
+            if (node && !tree.isSelectedNode(node)) {
+                tree.selectNode(node);
+            }
+        }
+    }
+    function onCloseClick() {
+        leftTree.selectNode(null);
+    }
+
+
+
+</script>
+
+
 </html>
