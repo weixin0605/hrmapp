@@ -9,6 +9,8 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service("userService")
 //@Transactional(propagation= Propagation.REQUIRED,isolation = Isolation.DEFAULT)
 public class UserService{
@@ -49,5 +51,9 @@ public class UserService{
 
     public void addUser(User user) {
         userMapper.insertSelective(user);
+    }
+
+    public List<User> searchAllUser() {
+        return userMapper.selectAllUsers();
     }
 }

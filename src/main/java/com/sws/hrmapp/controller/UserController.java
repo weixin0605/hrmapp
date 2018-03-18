@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -39,4 +40,15 @@ public class UserController {
         }
         return map;
     }
+
+    @RequestMapping("/user/searchAllUser")
+    @ResponseBody
+    public List<User> searchAllUser(){
+        List<User> userLists = userService.searchAllUser();
+        Map<String,List<User>> map = new HashMap<String, List<User>>();
+        map.put("userList",userLists);
+        return userLists;
+    }
 }
+
+

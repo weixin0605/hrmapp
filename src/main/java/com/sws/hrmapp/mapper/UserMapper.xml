@@ -113,4 +113,7 @@
       username = #{username,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="selectAllUsers" resultMap="BaseResultMap">
+    select * from user
+  </select>
 </mapper>
